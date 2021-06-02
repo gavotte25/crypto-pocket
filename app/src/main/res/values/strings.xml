@@ -10,4 +10,10 @@
     <string name="register">Register</string>
     <string name="log_in">Log in</string>
     <string name="empty_pocket">You haven\'t choosen any currency yet. Let\'s find some in the market!</string>
+    <string name="empty_pocket_image">Empty pocket image</string>
+    <string name="log_out_btn">Log out button</string>
+    <string name="search_page_btn">Click to view all currencies</string>
+    <string name="coin_image">Coin image</string>
+    <string name="buy_price_label">Buy price</string>
+    <string name="sell_price">Sell price</string>
 </resources>

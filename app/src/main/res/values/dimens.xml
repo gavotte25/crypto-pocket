@@ -3,4 +3,7 @@
     <dimen name="main_image_size">150dp</dimen>
     <dimen name="button_width">120dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
+    <dimen name="coin_size">50dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
 </resources>
