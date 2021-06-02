@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_main">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/pocketFragment">
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cryptopocket.screens.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/pocketFragment"
+        android:name="com.example.cryptopocket.screens.pocket.PocketFragment"
+        android:label="fragment_pocket"
+        tools:layout="@layout/fragment_pocket" >
+        <action
+            android:id="@+id/action_pocketFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.cryptopocket.screens.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>
