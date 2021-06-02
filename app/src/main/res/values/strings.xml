@@ -5,4 +5,8 @@
     <string name="my_pocket">My pocket</string>
     <string name="search_currencies">Cryto market</string>
     <string name="app_icon">App icon</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="log_in">Log in</string>
 </resources>

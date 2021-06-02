@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/pocketFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.cryptopocket.screens.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_pocketFragment"
+            app:destination="@id/pocketFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pocketFragment"
         android:name="com.example.cryptopocket.screens.pocket.PocketFragment"
         android:label="fragment_pocket"
-        tools:layout="@layout/fragment_pocket" >
+        tools:layout="@layout/fragment_pocket">
         <action
             android:id="@+id/action_pocketFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
