@@ -1,11 +1,13 @@
 package com.example.cryptopocket.screens.pocket
 
 import android.os.Bundle
+import android.view.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import com.example.cryptopocket.R
+import com.example.cryptopocket.databinding.FragmentPocketBinding
 
 class EmptyPocketFragment : Fragment() {
 
@@ -14,7 +16,17 @@ class EmptyPocketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_empty_pocket, container, false)
+        val binding: FragmentPocketBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_empty_pocket, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.logout_optiion_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(findNavController())||super.onOptionsItemSelected(item)
     }
 
 }
