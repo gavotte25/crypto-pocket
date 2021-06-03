@@ -18,4 +18,5 @@
     <string name="sell_price">Sell price</string>
     <string name="add_btn">Click to add to pocket</string>
     <string name="remove_btn">Click to remove from pocket</string>
+    <string name="search">Search</string>
 </resources>

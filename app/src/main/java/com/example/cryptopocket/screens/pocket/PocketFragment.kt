@@ -22,7 +22,7 @@ class PocketFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.logout_optiion_menu, menu)
+        inflater.inflate(R.menu.logout_option_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
