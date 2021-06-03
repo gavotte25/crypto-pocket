@@ -8,9 +8,5 @@
         android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/loginFragment"
-        android:icon="@drawable/ic_baseline_power_settings_new_24"
-        android:title="@string/log_out_btn"
-        app:showAsAction="ifRoom" />
+
 </menu>
