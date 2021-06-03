@@ -7,9 +7,11 @@ import com.example.cryptopocket.domain.Currency
 
 class SearchViewModel: ViewModel() {
 
-    private val _currencyList = MutableLiveData<List<Currency>>()
+    private val allItems = MutableLiveData<List<Currency>>()
+
+    private val _displayList = MutableLiveData<List<Currency>>()
     val currencyList: LiveData<List<Currency>>
-        get() = _currencyList
+        get() = _displayList
 
     init {
         val dummy = Currency(
@@ -22,8 +24,17 @@ class SearchViewModel: ViewModel() {
             "https://cdn.coinhako.com/assets/wallet-doge-96d9e86f316569a4e3e7e5196916e63ae30aaf7b9ed75577b2c3c72d77c6e66c.png",
             "Dogecoin"
         )
-        _currencyList.value = listOf(dummy, dummy2)
+        allItems.value = listOf(dummy, dummy2)
+        _displayList.value = allItems.value
 
+    }
+
+    fun filter(keyword: String?) {
+        keyword?.apply {
+            _displayList.value = allItems.value?.filter {
+                it.name.contains(keyword, true) || it.base.contains(keyword, true)
+            } ?: return@apply
+        }
     }
 
 }
