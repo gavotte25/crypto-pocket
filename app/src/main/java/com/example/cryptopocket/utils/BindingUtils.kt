@@ -9,8 +9,10 @@ import com.squareup.picasso.Picasso
 
 @BindingAdapter("dataList")
 fun bindRecyclerviewAdapter(recyclerView: RecyclerView, currencyList: List<Currency>) {
-    val adapter = recyclerView.adapter as CurrencyRecyclerAdapter
-    adapter.submitList(currencyList)
+    currencyList.apply {
+        val adapter = recyclerView.adapter as CurrencyRecyclerAdapter
+        adapter.submitList(currencyList)
+    }
 }
 
 @BindingAdapter("currencyImage")

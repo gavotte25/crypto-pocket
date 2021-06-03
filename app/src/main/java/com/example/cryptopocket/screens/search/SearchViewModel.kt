@@ -20,10 +20,13 @@ class SearchViewModel: ViewModel() {
         get() = _displayList
 
     init {
+        allItems.value = listOf()
+        allItems.observeForever{
+            _displayList.value = allItems.value
+        }
         viewModelScope.launch {
             allItems.value = repository.fetchOnlineData()
         }
-        _displayList.value = allItems.value
     }
 
     fun filter(keyword: String?) {
