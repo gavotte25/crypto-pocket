@@ -14,8 +14,8 @@
     <string name="log_out_btn">Log out button</string>
     <string name="search_page_btn">Click to view all currencies</string>
     <string name="coin_image">Coin image</string>
-    <string name="buy_price_label">Buy price</string>
-    <string name="sell_price">Sell price</string>
+    <string name="buy_price_label">Buy price($)</string>
+    <string name="sell_price">Sell price($)</string>
     <string name="add_btn">Click to add to pocket</string>
     <string name="remove_btn">Click to remove from pocket</string>
     <string name="search">Search</string>

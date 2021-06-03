@@ -18,7 +18,7 @@
             android:id="@+id/coin_img"
             android:layout_width="@dimen/coin_size"
             android:layout_height="@dimen/coin_size"
-            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/small_margin"
             android:background="@android:color/white"
             android:contentDescription="@string/coin_image"
             app:currencyImage="@{currency.icon}"
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/coin_name_text"
             style="@style/bigValue"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/max_currency_name_width"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
             android:textColor="@color/darkGray"
@@ -55,24 +55,22 @@
             style="@style/smallLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/item_detail_space"
             android:text="@string/buy_price_label"
             android:textColor="@color/primaryDarkColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/coin_code_text"
-            app:layout_constraintEnd_toEndOf="@+id/buy_price_value"
-            app:layout_constraintStart_toStartOf="@+id/buy_price_value" />
+            app:layout_constraintEnd_toStartOf="@+id/sell_price_label" />
 
         <TextView
             android:id="@+id/buy_price_value"
             style="@style/bigValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.valueOf(currency.buyPrice)}"
             android:textColor="@color/primaryDarkColor"
             android:textStyle="bold"
-            android:text="@{String.valueOf(currency.buyPrice)}"
-            app:layout_constraintBaseline_toBaselineOf="@+id/coin_name_text"
-            app:layout_constraintEnd_toStartOf="@+id/sell_price_value"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/coin_name_text"
+            app:layout_constraintBottom_toBottomOf="@+id/coin_img"
+            app:layout_constraintEnd_toEndOf="@+id/buy_price_label"
             tools:text="$37,255.00" />
 
         <TextView
@@ -80,22 +78,23 @@
             style="@style/smallLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
             android:text="@string/sell_price"
             android:textColor="@color/secondaryDarkColor"
             app:layout_constraintBaseline_toBaselineOf="@+id/buy_price_label"
-            app:layout_constraintEnd_toEndOf="@+id/sell_price_value" />
+            app:layout_constraintEnd_toStartOf="@+id/add_btn" />
 
         <TextView
             android:id="@+id/sell_price_value"
             style="@style/bigValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:text="@{String.valueOf(currency.sellPrice)}"
             android:textColor="@color/secondaryDarkColor"
             android:textColorHighlight="@color/secondaryDarkColor"
-            android:text="@{String.valueOf(currency.sellPrice)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/buy_price_value"
             app:layout_constraintEnd_toStartOf="@+id/add_btn"
-            app:layout_constraintStart_toEndOf="@+id/buy_price_value"
             tools:text="$37,257.96" />
 
         <ImageButton
