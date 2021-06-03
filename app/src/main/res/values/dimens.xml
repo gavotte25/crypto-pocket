@@ -6,4 +6,6 @@
     <dimen name="coin_size">50dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="large_margin">24dp</dimen>
+    <dimen name="item_btn_height">80dp</dimen>
+    <dimen name="item_btn_width">40dp</dimen>
 </resources>

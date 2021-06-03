@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/itemBackgroundColor">
+
+        <ImageView
+            android:id="@+id/coin_img"
+            android:layout_width="@dimen/coin_size"
+            android:layout_height="@dimen/coin_size"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:background="@android:color/white"
+            android:contentDescription="@string/coin_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_placeholder_coin" />
+
+        <TextView
+            android:id="@+id/coin_code_text"
+            style="@style/smallLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkGray"
+            app:layout_constraintStart_toStartOf="@+id/coin_name_text"
+            app:layout_constraintTop_toTopOf="@+id/coin_img"
+            tools:text="BTC" />
+
+        <TextView
+            android:id="@+id/coin_name_text"
+            style="@style/bigValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:textColor="@color/darkGray"
+            app:layout_constraintBottom_toBottomOf="@+id/coin_img"
+            app:layout_constraintStart_toEndOf="@+id/coin_img"
+            tools:text="BITCOIN" />
+
+        <TextView
+            android:id="@+id/buy_price_label"
+            style="@style/smallLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buy_price_label"
+            android:textColor="@color/primaryDarkColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/coin_code_text"
+            app:layout_constraintEnd_toEndOf="@+id/buy_price_value"
+            app:layout_constraintStart_toStartOf="@+id/buy_price_value" />
+
+        <TextView
+            android:id="@+id/buy_price_value"
+            style="@style/bigValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryDarkColor"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/coin_name_text"
+            app:layout_constraintEnd_toStartOf="@+id/sell_price_value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/coin_name_text"
+            tools:text="$37,255.00" />
+
+        <TextView
+            android:id="@+id/sell_price_label"
+            style="@style/smallLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_price"
+            android:textColor="@color/secondaryDarkColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/buy_price_label"
+            app:layout_constraintEnd_toEndOf="@+id/sell_price_value" />
+
+        <TextView
+            android:id="@+id/sell_price_value"
+            style="@style/bigValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryDarkColor"
+            android:textColorHighlight="@color/secondaryDarkColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/buy_price_value"
+            app:layout_constraintEnd_toStartOf="@+id/remove_btn"
+            app:layout_constraintStart_toEndOf="@+id/buy_price_value"
+            tools:text="$37,257.96" />
+
+        <ImageButton
+            android:id="@+id/remove_btn"
+            android:layout_width="@dimen/item_btn_width"
+            android:layout_height="@dimen/item_btn_height"
+            android:backgroundTint="@color/negativeColor"
+            android:contentDescription="@string/remove_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.304"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
