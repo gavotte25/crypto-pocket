@@ -2,6 +2,7 @@ package com.example.cryptopocket.screens.pocket
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import com.example.cryptopocket.R
 import com.example.cryptopocket.databinding.FragmentPocketBinding
 import com.example.cryptopocket.utils.CurrencyRecyclerAdapter
+import com.example.cryptopocket.utils.Listener
 
 class PocketFragment : Fragment() {
 
@@ -25,7 +27,9 @@ class PocketFragment : Fragment() {
         binding.viewModel = viewModel
 
         // Binding recycler view adapter
-        val adapter = CurrencyRecyclerAdapter()
+        val adapter = CurrencyRecyclerAdapter(false, Listener{
+            Toast.makeText(context, "${it.name} has been removed from your pocket!", Toast.LENGTH_SHORT).show()
+        })
         binding.pocketRecycler.adapter = adapter
 
         //onClick Floating button setup
@@ -35,8 +39,6 @@ class PocketFragment : Fragment() {
                 viewModel.doneNavigation()
             }
         })
-
-
 
         //Inflate empty pocket view in sub layout if not currency in pocket
         viewModel.currencyList.observe(viewLifecycleOwner, {

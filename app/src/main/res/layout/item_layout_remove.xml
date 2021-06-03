@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="currency"
+            type="com.example.cryptopocket.domain.Currency" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +21,7 @@
             android:layout_marginStart="@dimen/normal_margin"
             android:background="@android:color/white"
             android:contentDescription="@string/coin_image"
+            app:currencyImage="@{currency.icon}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/darkGray"
+            android:text="@{currency.base}"
             app:layout_constraintStart_toStartOf="@+id/coin_name_text"
             app:layout_constraintTop_toTopOf="@+id/coin_img"
             tools:text="BTC" />
@@ -41,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
             android:textColor="@color/darkGray"
+            android:text="@{currency.name}"
             app:layout_constraintBottom_toBottomOf="@+id/coin_img"
             app:layout_constraintStart_toEndOf="@+id/coin_img"
             tools:text="BITCOIN" />
@@ -63,6 +68,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primaryDarkColor"
             android:textStyle="bold"
+            android:text="@{String.valueOf(currency.buyPrice)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/coin_name_text"
             app:layout_constraintEnd_toStartOf="@+id/sell_price_value"
             app:layout_constraintHorizontal_bias="0.5"
@@ -86,6 +92,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/secondaryDarkColor"
             android:textColorHighlight="@color/secondaryDarkColor"
+            android:text="@{String.valueOf(currency.sellPrice)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/buy_price_value"
             app:layout_constraintEnd_toStartOf="@+id/remove_btn"
             app:layout_constraintStart_toEndOf="@+id/buy_price_value"
