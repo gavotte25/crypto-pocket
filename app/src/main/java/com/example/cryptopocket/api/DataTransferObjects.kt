@@ -16,19 +16,6 @@ data class NetworkCurrency(
     val name: String
 )
 
-fun List<NetworkCurrency>.asDomainModel(): List<Currency> {
-    return map {
-        Currency(
-            base = it.base,
-            counter = it.counter,
-            buyPrice = it.buyPrice,
-            sellPrice = it.sellPrice,
-            icon = it.icon,
-            name = it.name
-        )
-    }
-}
-
 fun List<NetworkCurrency>.asDatabaseModel(): List<DatabaseCurrency> {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
     val now = Calendar.getInstance().time
