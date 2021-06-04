@@ -1,29 +1,29 @@
 package com.example.cryptopocket.screens.pocket
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.cryptopocket.database.CurrencyDatabase
 import com.example.cryptopocket.domain.Currency
+import com.example.cryptopocket.repository.CurrencyRepository
+import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
-class PocketViewModel: ViewModel() {
+class PocketViewModel(app: Application): AndroidViewModel(app) {
+
+    private val database = CurrencyDatabase.getInstance(app).currencyDatabaseDao
+
+    private val repository = CurrencyRepository(database)
 
     private val _isNavigatedToSearch = MutableLiveData<Boolean>()
     val isNavigatedToSearch: LiveData<Boolean>
         get() = _isNavigatedToSearch
-
-    private val _currencyList = MutableLiveData<List<Currency>>()
-    val currencyList: LiveData<List<Currency>>
-        get() = _currencyList
+    val currencyList = repository.inPocketCurrencies
 
     init {
         _isNavigatedToSearch.value = false
-        val dummy = Currency(
-            "LTC", "USD", 188.721, 188.091,
-            "https://cdn.coinhako.com/assets/wallet-ltc-e4ce25a8fb34c45d40165b6f4eecfbca2729c40c20611acd45ea0dc3ab50f8a6.png",
-            "Litecoin"
-        )
-        _currencyList.value = listOf(dummy)
-
+        viewModelScope.launch {
+            repository.refreshCurrencyData()
+        }
     }
 
     fun doneNavigation() {
@@ -32,5 +32,20 @@ class PocketViewModel: ViewModel() {
 
     fun navigateToSearch() {
         _isNavigatedToSearch.value = true
+    }
+
+    fun removeFromPocket(currency: Currency) {
+        viewModelScope.launch {
+            repository.deleteCurrencyFromPocket(currency)
+        }
+    }
+}
+
+class PocketViewModelFactory(val app: Application): ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(PocketViewModel::class.java)) {
+            return PocketViewModel(app) as T
+        }
+        throw IllegalArgumentException("Unable to construct viewModel")
     }
 }

@@ -15,6 +15,11 @@ import com.example.cryptopocket.utils.Listener
 
 class PocketFragment : Fragment() {
 
+    private val viewModel: PocketViewModel by lazy {
+        val factory = PocketViewModelFactory(requireActivity().application)
+        ViewModelProvider(this, factory).get(PocketViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,11 +28,11 @@ class PocketFragment : Fragment() {
         val binding: FragmentPocketBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_pocket, container, false)
         binding.lifecycleOwner = this
         setHasOptionsMenu(true)
-        val viewModel = ViewModelProvider(this).get(PocketViewModel::class.java)
         binding.viewModel = viewModel
 
         // Binding recycler view adapter
         val adapter = CurrencyRecyclerAdapter(false, Listener{
+            viewModel.removeFromPocket(it)
             Toast.makeText(context, "${it.name} has been removed from your pocket!", Toast.LENGTH_SHORT).show()
         })
         binding.pocketRecycler.adapter = adapter
@@ -42,9 +47,9 @@ class PocketFragment : Fragment() {
 
         //Inflate empty pocket view in sub layout if not currency in pocket
         viewModel.currencyList.observe(viewLifecycleOwner, {
-            if((it.count()==0)) {
-                val emptyPocketView = inflater.inflate(R.layout.empty_pocket, binding.subLayout, false)
-                binding.subLayout.addView(emptyPocketView)
+            binding.subLayout.visibility = when(it.count()) {
+                0 -> View.VISIBLE
+                else -> View.GONE
             }
         })
 

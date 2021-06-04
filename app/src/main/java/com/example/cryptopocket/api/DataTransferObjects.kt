@@ -1,8 +1,11 @@
 package com.example.cryptopocket.api
 
+import com.example.cryptopocket.database.DatabaseCurrency
 import com.example.cryptopocket.domain.Currency
 import com.squareup.moshi.Json
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class NetworkCurrency(
     val base: String,
@@ -22,6 +25,23 @@ fun List<NetworkCurrency>.asDomainModel(): List<Currency> {
             sellPrice = it.sellPrice,
             icon = it.icon,
             name = it.name
+        )
+    }
+}
+
+fun List<NetworkCurrency>.asDatabaseModel(): List<DatabaseCurrency> {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+    val now = Calendar.getInstance().time
+    val dateString = dateFormat.format(now)
+    return map {
+        DatabaseCurrency(
+            base = it.base,
+            counter = it.counter,
+            buyPrice = it.buyPrice,
+            sellPrice = it.sellPrice,
+            icon = it.icon,
+            name = it.name,
+            updateDate = dateString
         )
     }
 }

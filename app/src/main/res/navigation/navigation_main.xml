@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/pocketFragment"
         android:name="com.example.cryptopocket.screens.pocket.PocketFragment"
-        android:label="fragment_pocket"
+        android:label="@string/pocket_fragment_label"
         tools:layout="@layout/fragment_pocket">
         <action
             android:id="@+id/action_pocketFragment_to_searchFragment"
@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.cryptopocket.screens.search.SearchFragment"
-        android:label="fragment_search"
+        android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search" />
 </navigation>

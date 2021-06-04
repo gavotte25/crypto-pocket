@@ -17,7 +17,10 @@ import com.example.cryptopocket.utils.Listener
 
 class SearchFragment : Fragment() {
 
-    lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by lazy {
+        val factory = SearchViewModelFactory(requireActivity().application)
+        ViewModelProvider(this, factory).get(SearchViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,11 +29,11 @@ class SearchFragment : Fragment() {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.lifecycleOwner = this
         setHasOptionsMenu(true)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         binding.viewModel = viewModel
 
         // Binding recycler view adapter
         val adapter = CurrencyRecyclerAdapter(true, Listener{
+            viewModel.addToPocket(it)
             Toast.makeText(context, "${it.name} has been added to your pocket!", Toast.LENGTH_SHORT).show()
         })
         binding.pocketRecycler.adapter = adapter

@@ -27,7 +27,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sub_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <include layout="@layout/empty_pocket"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

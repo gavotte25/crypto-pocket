@@ -1,22 +1,48 @@
 package com.example.cryptopocket.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.example.cryptopocket.api.CoinHakoApi
-import com.example.cryptopocket.api.asDomainModel
+import com.example.cryptopocket.api.asDatabaseModel
 import com.example.cryptopocket.api.parseCurrencyJsonResult
+import com.example.cryptopocket.database.CurrencyDatabaseDao
+import com.example.cryptopocket.database.PocketRecord
+import com.example.cryptopocket.database.asDomainModel
 import com.example.cryptopocket.domain.Currency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.lang.Exception
 
-class CurrencyRepository() {
-    suspend fun fetchOnlineData(): List<Currency> {
-        var currencyList: List<Currency>
-        var jsonString = ""
+class CurrencyRepository(private val database: CurrencyDatabaseDao) {
+
+    suspend fun refreshCurrencyData() {
         withContext(Dispatchers.IO) {
-            jsonString = CoinHakoApi.retrofitService.getCurrencies()
-            currencyList = parseCurrencyJsonResult(JSONObject(jsonString)).asDomainModel()
+            if(database.countValidData() == 0) {
+                val jsonString = CoinHakoApi.retrofitService.getCurrencies()
+                val currencyList = parseCurrencyJsonResult(JSONObject(jsonString)).asDatabaseModel()
+                database.insertCurrencies(*currencyList.toTypedArray())
+                database.deleteOutdatedData()
+            }
         }
-        return currencyList
+    }
+
+    val allCurrencies: LiveData<List<Currency>>  = Transformations.map(database.getAllCurrency()){
+        it.asDomainModel()
+    }
+
+    val inPocketCurrencies: LiveData<List<Currency>> = Transformations.map(database.getCurrenciesFromPocket()) {
+        it.asDomainModel()
+    }
+
+    suspend fun addCurrencyToPocket(currency: Currency) {
+        withContext(Dispatchers.IO) {
+            database.insertToPocket(PocketRecord(currency.base))
+        }
+    }
+
+    suspend fun deleteCurrencyFromPocket(currency: Currency) {
+        withContext(Dispatchers.IO) {
+            database.deleteFromPocket(PocketRecord(currency.base))
+        }
     }
 }

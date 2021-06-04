@@ -19,4 +19,6 @@
     <string name="add_btn">Click to add to pocket</string>
     <string name="remove_btn">Click to remove from pocket</string>
     <string name="search">Search</string>
+    <string name="search_fragment_label">All items</string>
+    <string name="pocket_fragment_label">My pocket</string>
 </resources>

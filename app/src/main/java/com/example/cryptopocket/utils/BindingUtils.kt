@@ -8,7 +8,7 @@ import com.example.cryptopocket.domain.Currency
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("dataList")
-fun bindRecyclerviewAdapter(recyclerView: RecyclerView, currencyList: List<Currency>) {
+fun bindRecyclerviewAdapter(recyclerView: RecyclerView, currencyList: List<Currency>?) {
     currencyList.apply {
         val adapter = recyclerView.adapter as CurrencyRecyclerAdapter
         adapter.submitList(currencyList)
