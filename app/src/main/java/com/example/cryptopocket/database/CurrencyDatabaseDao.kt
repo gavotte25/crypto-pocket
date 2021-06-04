@@ -14,7 +14,7 @@ interface CurrencyDatabaseDao {
     @Query("SELECT * FROM currency_table ORDER BY base")
     fun getAllCurrency(): LiveData<List<DatabaseCurrency>>
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertToPocket(record: PocketRecord)
 
     @Delete
