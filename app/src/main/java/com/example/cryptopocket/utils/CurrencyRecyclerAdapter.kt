@@ -1,58 +1,64 @@
 package com.example.cryptopocket.utils
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptopocket.R
-import com.example.cryptopocket.databinding.ItemLayoutAddBinding
-import com.example.cryptopocket.databinding.ItemLayoutRemoveBinding
+import com.example.cryptopocket.databinding.ItemLayoutBinding
 import com.example.cryptopocket.domain.Currency
 
-class CurrencyRecyclerAdapter(private val forAdding: Boolean, private val listener: Listener): ListAdapter<Currency, CurrencyViewHolder>(DiffCallBack){
+class CurrencyRecyclerAdapter(private val forSearchScreen: Boolean, private val listener: Listener): ListAdapter<Currency, CurrencyViewHolder>(DiffCallBack){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
-        return CurrencyViewHolder.from(parent, forAdding)
+        return CurrencyViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         val currency = getItem(position)
-        holder.bind(currency, listener)
+        holder.bind(currency, forSearchScreen, listener)
     }
 }
 
-// Create 1 view holder for both similar layouts
-class CurrencyViewHolder private constructor (private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root) {
+// Create 1 view holder for 3 scenarios
+class CurrencyViewHolder private constructor (private val binding: ItemLayoutBinding): RecyclerView.ViewHolder(binding.root) {
     companion object {
-        fun from(parent: ViewGroup, forAdding: Boolean): CurrencyViewHolder {
-            val binding = when(forAdding) {
-                true -> DataBindingUtil.inflate<ItemLayoutAddBinding>(
-                    LayoutInflater.from(parent.context), R.layout.item_layout_add, parent,false)
-                else -> DataBindingUtil.inflate<ItemLayoutRemoveBinding>(
-                    LayoutInflater.from(parent.context), R.layout.item_layout_remove, parent,false)
-            }
+        fun from(parent: ViewGroup): CurrencyViewHolder {
+            val binding: ItemLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_layout, parent, false)
             return CurrencyViewHolder(binding)
         }
     }
 
-    fun bind(currency: Currency, listener: Listener) {
-        when (binding) {
-            is ItemLayoutAddBinding -> {
-                binding.currency = currency
-                binding.addBtn.setOnClickListener{
-                    listener.onClick(currency)
-                }
-                binding.executePendingBindings()
+    fun bind(currency: Currency, forSearchScreen: Boolean, listener: Listener) {
+        binding.currency = currency
+
+        if (forSearchScreen) {
+            binding.removeBtn.visibility = View.INVISIBLE
+            binding.addBtn.setOnClickListener {
+                listener.onClick(currency)
             }
-            is ItemLayoutRemoveBinding -> {
-                binding.currency = currency
-                binding.removeBtn.setOnClickListener {
-                    listener.onClick(currency)
-                }
-                binding.executePendingBindings()
+            binding.removeBtn.setOnClickListener{}
+            binding.addedBtn.setOnClickListener{}
+            if (currency.added == 0) {
+                binding.addBtn.visibility = View.VISIBLE
+                binding.addedBtn.visibility = View.INVISIBLE
             }
+            else {
+                binding.addBtn.visibility = View.INVISIBLE
+                binding.addedBtn.visibility = View.VISIBLE
+            }
+        }
+        else {
+            binding.removeBtn.visibility = View.VISIBLE
+            binding.addBtn.visibility = View.INVISIBLE
+            binding.addedBtn.visibility = View.INVISIBLE
+            binding.removeBtn.setOnClickListener {
+                listener.onClick(currency)
+            }
+            binding.addedBtn.setOnClickListener{}
+            binding.addBtn.setOnClickListener{}
         }
     }
 }

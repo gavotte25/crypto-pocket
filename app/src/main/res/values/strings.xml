@@ -21,4 +21,5 @@
     <string name="search">Search</string>
     <string name="search_fragment_label">All items</string>
     <string name="pocket_fragment_label">My pocket</string>
+    <string name="added_btn">This it currency is already added</string>
 </resources>
