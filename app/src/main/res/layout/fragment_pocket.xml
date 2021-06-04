@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.cryptopocket.screens.pocket.PocketViewModel" />
+            type="com.example.cryptopocket.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
-            app:dataList="@{viewModel.currencyList}"
+            app:dataList="@{viewModel.pocketItems}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
@@ -42,7 +42,6 @@
             android:contentDescription="@string/search_page_btn"
             android:focusable="true"
             android:src="@android:drawable/ic_input_add"
-            android:onClick="@{() -> viewModel.navigateToSearch()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

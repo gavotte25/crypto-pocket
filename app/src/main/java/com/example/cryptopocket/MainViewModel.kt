@@ -1,4 +1,4 @@
-package com.example.cryptopocket.screens.search
+package com.example.cryptopocket
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -8,7 +8,7 @@ import com.example.cryptopocket.repository.CurrencyRepository
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class SearchViewModel(app: Application): AndroidViewModel(app) {
+class MainViewModel(app: Application): AndroidViewModel(app) {
 
     private val database = CurrencyDatabase.getInstance(app).currencyDatabaseDao
 
@@ -16,25 +16,24 @@ class SearchViewModel(app: Application): AndroidViewModel(app) {
 
     private val allItems = repository.allCurrencies
 
-    private val _displayList = MutableLiveData<List<Currency>>()
+    val pocketItems = repository.inPocketCurrencies
 
-    val currencyList: LiveData<List<Currency>>
-        get() = _displayList
+    private val _filteredItems = MutableLiveData<List<Currency>>()
+    val filteredItems: LiveData<List<Currency>>
+        get() = _filteredItems
 
     init {
         allItems.observeForever{
-            _displayList.value = allItems.value
+            _filteredItems.value = allItems.value
         }
         viewModelScope.launch {
             repository.refreshCurrencyData()
         }
     }
 
-    fun filter(keyword: String?) {
-        keyword?.apply {
-            _displayList.value = allItems.value?.filter {
-                it.name.contains(keyword, true) || it.base.contains(keyword, true)
-            } ?: return@apply
+    fun removeFromPocket(currency: Currency) {
+        viewModelScope.launch {
+            repository.deleteCurrencyFromPocket(currency)
         }
     }
 
@@ -44,12 +43,19 @@ class SearchViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun filter(keyword: String?) {
+        keyword?.apply {
+            _filteredItems.value = allItems.value?.filter {
+                it.name.contains(keyword, true) || it.base.contains(keyword, true)
+            } ?: return@apply
+        }
+    }
 }
 
-class SearchViewModelFactory(val app: Application): ViewModelProvider.Factory {
+class MainViewModelFactory(val app: Application): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(SearchViewModel::class.java)) {
-            return SearchViewModel(app) as T
+        if(modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(app) as T
         }
         throw IllegalArgumentException("Unable to construct viewModel")
     }

@@ -7,9 +7,12 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import com.example.cryptopocket.MainViewModel
+import com.example.cryptopocket.MainViewModelFactory
 import com.example.cryptopocket.R
 import com.example.cryptopocket.databinding.FragmentSearchBinding
 import com.example.cryptopocket.utils.CurrencyRecyclerAdapter
@@ -17,9 +20,8 @@ import com.example.cryptopocket.utils.Listener
 
 class SearchFragment : Fragment() {
 
-    private val viewModel: SearchViewModel by lazy {
-        val factory = SearchViewModelFactory(requireActivity().application)
-        ViewModelProvider(this, factory).get(SearchViewModel::class.java)
+    private val viewModel: MainViewModel by activityViewModels{
+        MainViewModelFactory(requireActivity().application)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,7 @@ class SearchFragment : Fragment() {
             viewModel.addToPocket(it)
             Toast.makeText(context, "${it.name} has been added to your pocket!", Toast.LENGTH_SHORT).show()
         })
-        binding.pocketRecycler.adapter = adapter
+        binding.allItemRecycler.adapter = adapter
 
         return binding.root
     }
@@ -59,7 +61,6 @@ class SearchFragment : Fragment() {
             })
         }
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(findNavController())||super.onOptionsItemSelected(item)

@@ -5,9 +5,12 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import com.example.cryptopocket.MainViewModel
+import com.example.cryptopocket.MainViewModelFactory
 import com.example.cryptopocket.R
 import com.example.cryptopocket.databinding.FragmentPocketBinding
 import com.example.cryptopocket.utils.CurrencyRecyclerAdapter
@@ -15,9 +18,8 @@ import com.example.cryptopocket.utils.Listener
 
 class PocketFragment : Fragment() {
 
-    private val viewModel: PocketViewModel by lazy {
-        val factory = PocketViewModelFactory(requireActivity().application)
-        ViewModelProvider(this, factory).get(PocketViewModel::class.java)
+    private val viewModel: MainViewModel by activityViewModels{
+        MainViewModelFactory(requireActivity().application)
     }
 
     override fun onCreateView(
@@ -38,15 +40,12 @@ class PocketFragment : Fragment() {
         binding.pocketRecycler.adapter = adapter
 
         //onClick Floating button setup
-        viewModel.isNavigatedToSearch.observe(viewLifecycleOwner, {
-            if(it == true) {
-                findNavController().navigate(PocketFragmentDirections.actionPocketFragmentToSearchFragment())
-                viewModel.doneNavigation()
-            }
-        })
+        binding.faBtn.setOnClickListener{
+            findNavController().navigate(PocketFragmentDirections.actionPocketFragmentToSearchFragment())
+        }
 
         //Inflate empty pocket view in sub layout if not currency in pocket
-        viewModel.currencyList.observe(viewLifecycleOwner, {
+        viewModel.pocketItems.observe(viewLifecycleOwner, {
             binding.subLayout.visibility = when(it.count()) {
                 0 -> View.VISIBLE
                 else -> View.GONE

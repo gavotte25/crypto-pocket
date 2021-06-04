@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.cryptopocket.screens.search.SearchViewModel" />
+            type="com.example.cryptopocket.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,11 +15,11 @@
         tools:context=".screens.search.SearchFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pocket_recycler"
+            android:id="@+id/all_item_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
-            app:dataList="@{viewModel.currencyList}"
+            app:dataList="@{viewModel.filteredItems}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
