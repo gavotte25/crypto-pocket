@@ -2,7 +2,7 @@ package com.example.cryptopocket.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.cryptopocket.api.CoinHakoApi
+import com.example.cryptopocket.api.CoinHakoApiService
 import com.example.cryptopocket.api.asDatabaseModel
 import com.example.cryptopocket.api.parseCurrencyJsonResult
 import com.example.cryptopocket.database.CurrencyDatabaseDao
@@ -13,12 +13,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-class CurrencyRepository(private val database: CurrencyDatabaseDao) {
+interface CurrencyRepository {
+    suspend fun refreshCurrencyData()
+    suspend fun addCurrencyToPocket(currency: Currency)
+    suspend fun deleteCurrencyFromPocket(currency: Currency)
+    val allCurrencies: LiveData<List<Currency>>
+    val inPocketCurrencies: LiveData<List<Currency>>
+}
 
-    suspend fun refreshCurrencyData() {
+class CurrencyRepositoryImpl(private val database: CurrencyDatabaseDao, private val api: CoinHakoApiService ): CurrencyRepository {
+
+    override suspend fun refreshCurrencyData() {
         withContext(Dispatchers.IO) {
             if(database.countValidData() == 0) {
-                val jsonString = CoinHakoApi.retrofitService.getCurrencies()
+                val jsonString = api.getCurrencies()
                 val currencyList = parseCurrencyJsonResult(JSONObject(jsonString)).asDatabaseModel()
                 database.insertCurrencies(*currencyList.toTypedArray())
                 database.deleteOutdatedData()
@@ -26,21 +34,21 @@ class CurrencyRepository(private val database: CurrencyDatabaseDao) {
         }
     }
 
-    val allCurrencies: LiveData<List<Currency>>  = Transformations.map(database.getAllCurrency()){
+    override val allCurrencies: LiveData<List<Currency>>  = Transformations.map(database.getAllCurrency()){
         it.asDomainModel()
     }
 
-    val inPocketCurrencies: LiveData<List<Currency>> = Transformations.map(database.getCurrenciesFromPocket()) {
+    override val inPocketCurrencies: LiveData<List<Currency>> = Transformations.map(database.getCurrenciesFromPocket()) {
         it.asDomainModel()
     }
 
-    suspend fun addCurrencyToPocket(currency: Currency) {
+    override suspend fun addCurrencyToPocket(currency: Currency) {
         withContext(Dispatchers.IO) {
             database.insertToPocket(PocketRecord(currency.base))
         }
     }
 
-    suspend fun deleteCurrencyFromPocket(currency: Currency) {
+    override suspend fun deleteCurrencyFromPocket(currency: Currency) {
         withContext(Dispatchers.IO) {
             database.deleteFromPocket(PocketRecord(currency.base))
         }

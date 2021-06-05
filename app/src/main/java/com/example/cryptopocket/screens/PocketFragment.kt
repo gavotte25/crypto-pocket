@@ -1,27 +1,21 @@
-package com.example.cryptopocket.screens.pocket
+package com.example.cryptopocket.screens
 
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import com.example.cryptopocket.MainViewModel
-import com.example.cryptopocket.MainViewModelFactory
 import com.example.cryptopocket.R
 import com.example.cryptopocket.databinding.FragmentPocketBinding
 import com.example.cryptopocket.utils.CurrencyRecyclerAdapter
 import com.example.cryptopocket.utils.Listener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PocketFragment : Fragment() {
 
-    private val viewModel: MainViewModel by activityViewModels{
-        MainViewModelFactory(requireActivity().application)
-    }
-
+    private val viewModel by viewModel<MainViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
