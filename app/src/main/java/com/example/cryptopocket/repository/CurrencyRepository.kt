@@ -25,12 +25,15 @@ class CurrencyRepositoryImpl(private val database: CurrencyDatabaseDao, private 
 
     override suspend fun refreshCurrencyData() {
         withContext(Dispatchers.IO) {
-            if(database.countValidData() == 0) {
-                val jsonString = api.getCurrencies()
-                val currencyList = parseCurrencyJsonResult(JSONObject(jsonString)).asDatabaseModel()
-                database.insertCurrencies(*currencyList.toTypedArray())
-                database.deleteOutdatedData()
+            try {
+                if(database.countValidData() == 0) {
+                    val jsonString = api.getCurrencies()
+                    val currencyList = parseCurrencyJsonResult(JSONObject(jsonString)).asDatabaseModel()
+                    database.insertCurrencies(*currencyList.toTypedArray())
+                    database.deleteOutdatedData()
+                }
             }
+            catch (e: Exception){println(e.toString())}
         }
     }
 

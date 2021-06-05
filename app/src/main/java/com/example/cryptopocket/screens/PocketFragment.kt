@@ -2,7 +2,6 @@ package com.example.cryptopocket.screens
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -29,7 +28,6 @@ class PocketFragment : Fragment() {
         // Binding recycler view adapter
         val adapter = CurrencyRecyclerAdapter(false, Listener{
             viewModel.removeFromPocket(it)
-            Toast.makeText(context, "${it.name} has been removed from your pocket!", Toast.LENGTH_SHORT).show()
         })
         binding.pocketRecycler.adapter = adapter
 

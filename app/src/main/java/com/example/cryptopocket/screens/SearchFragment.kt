@@ -3,7 +3,6 @@ package com.example.cryptopocket.screens
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,7 +31,6 @@ class SearchFragment : Fragment() {
         // Binding recycler view adapter
         val adapter = CurrencyRecyclerAdapter(true, Listener{
             viewModel.addToPocket(it)
-            Toast.makeText(context, "${it.name} has been added to your pocket!", Toast.LENGTH_SHORT).show()
         })
         binding.allItemRecycler.adapter = adapter
 

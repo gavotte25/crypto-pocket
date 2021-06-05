@@ -43,7 +43,7 @@ class ExampleInstrumentedTest {
         db.close()
     }
 
-//    Adjust insertCurrency to return List<DatabaseCurrency> instead of Livedate in order to take this test
+//    Below test cases are not for submission purpose, but I did use it to test the database, need to modify in order to use
 //    @Test
 //    fun testDb() { runBlocking {
 //        val currency = DatabaseCurrency(
